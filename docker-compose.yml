@@ -1,0 +1,37 @@
+version: '3.1'
+services:
+  nginx:
+    image:nginx:1.13.12-alpine
+    container_name : nginx
+    ports:
+      - '80:80'
+    volumes:
+      - './nginx/:/etc/nginx/conf.d'
+      - './www/web/:/usr/share/nginx/html
+    depends_on:
+      - mysql
+  mysql:
+    container_name : mysql
+    image : mysql:5.7
+    restart : always
+    environment:
+      MYSQL_DATABASE : 'db'
+      MYSQL_USER: 'test'
+      MYSQL_PASSWORD : '123456789'
+      MYSQL_ROOT_PASSWORD : '987654321'
+    ports:
+      - '3306:3306'
+    volumes:
+      - my-db:/var/lib/mys
+  phpmyadmin:
+    container_name : phpmyadmin
+    image : phpmyadmin/phpmyadmin
+    restart : always
+    ports:
+      - '20200:80'
+    environment:
+      PMA_ARBITRARY: 1
+  volumes:
+    my-db:
+
+
